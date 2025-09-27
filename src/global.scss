@@ -1,0 +1,200 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+body, ion-content {
+  --background: #f6f8fc !important;
+  background: #f6f8fc !important;
+}
+
+.pacientes-title {
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.card {
+  background: #232b36;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  padding: 18px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.resumo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+
+.detalhes-link {
+  color: #3ee06c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.resumo-valores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.valor {
+  font-size: 1.3em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.label {
+  font-size: 0.9em;
+  color: #b0b0b0;
+  text-align: center;
+}
+
+.resumo-circular {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circular {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 5px solid #3ee06c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.circular-valor {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #3ee06c;
+}
+
+.circular-label {
+  font-size: 0.9em;
+  color: #3ee06c;
+}
+
+.macro {
+  margin-top: 10px;
+  font-size: 0.95em;
+}
+
+.macro > div {
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.macro-bar {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.carbo {
+  color: #ffb74d;
+}
+.proteina {
+  color: #90caf9;
+}
+.gordura {
+  color: #80cbc4;
+}
+
+.agua-card {
+  background: #232b36;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.agua-header {
+  background: #232b36;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 18px 8px 18px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  font-size: 1.1em;
+}
+
+.agua-content {
+  background: #29b6f6;
+  color: #fff;
+  text-align: center;
+  padding: 18px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+.agua-titulo {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.agua-objetivo {
+  font-size: 0.95em;
+  margin-bottom: 8px;
+}
+
+.agua-valor {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.agua-icons ion-icon {
+  font-size: 1.5em;
+  margin: 0 2px;
+  color: #fff;
+}
+
+ion-tab-bar {
+  --background: #066232 !important;
+  --color: #fff !important;
+  --color-selected: #fff !important;
+}
