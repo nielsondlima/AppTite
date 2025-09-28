@@ -1,3 +1,25 @@
+// Cor primária global para header laranja
+:root {
+  --ion-color-primary: #fc6803;
+  --ion-color-primary-rgb: 252,104,3;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #fc6803;
+  --ion-color-primary-tint: #fc6803;
+}
+// Header global para todas as tabs
+ion-header, ion-toolbar {
+  --background: #fc6803 !important;
+  background: #fc6803 !important;
+  --ion-color-base: #fc6803 !important;
+  color: #fff !important;
+}
+ion-title, ion-toolbar .title {
+  color: #fff !important;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+}
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -200,7 +222,12 @@ body, ion-content {
 }
 
 ion-tab-bar {
-  --background: #066232 !important;
+  --background: #fc6803 !important;
   --color: #fff !important;
   --color-selected: #fff !important;
+}
+
+ion-toolbar {
+  --background: #fc6803 !important;
+  --ion-color-base: #fc6803 !important;
 }
