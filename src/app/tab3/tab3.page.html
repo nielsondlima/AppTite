@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="success">
-    <ion-title class="pacientes-title">
-      PACIENTES
+    <ion-title class="app-title">
+      Agenda
     </ion-title>
     <ion-buttons slot="end">
       <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
@@ -10,5 +10,46 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <!-- Conteúdo da Tab 3 -->
+  <div class="agenda-container">
+    <div class="agenda-header">
+      <div class="agenda-title">Setembro de 2025</div>
+      <div class="agenda-buttons">
+        <button class="agenda-btn active">Hoje</button>
+        <button class="agenda-btn"></button>
+        <button class="agenda-btn">Dia</button>
+        <button class="agenda-btn">Semana</button>
+        <button class="agenda-btn">Mês</button>
+      </div>
+    </div>
+    <div class="agenda-table-wrapper">
+      <table class="agenda-table">
+        <thead>
+          <tr>
+            <th style="width: 80px;"></th>
+            <th>segunda-feira, 15/09</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="agenda-label">dia<br>inteiro</td>
+            <td class="agenda-cell all-day"></td>
+          </tr>
+          <tr *ngFor="let hour of hours">
+            <td class="agenda-label">{{hour}}</td>
+            <td class="agenda-cell"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ion-card>
+  <ion-card-header>
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    Here's a small text description for the card content. Nothing more, nothing less.
+  </ion-card-content>
+</ion-card>
 </ion-content>
