@@ -1,55 +1,64 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title class="app-title">
-      Agenda
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
-    </ion-buttons>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Diário de Refeições</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="agenda-container">
-    <div class="agenda-header">
-      <div class="agenda-title">Setembro de 2025</div>
-      <div class="agenda-buttons">
-        <button class="agenda-btn active">Hoje</button>
-        <button class="agenda-btn"></button>
-        <button class="agenda-btn">Dia</button>
-        <button class="agenda-btn">Semana</button>
-        <button class="agenda-btn">Mês</button>
-      </div>
-    </div>
-    <div class="agenda-table-wrapper">
-      <table class="agenda-table">
-        <thead>
-          <tr>
-            <th style="width: 80px;"></th>
-            <th>segunda-feira, 15/09</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="agenda-label">dia<br>inteiro</td>
-            <td class="agenda-cell all-day"></td>
-          </tr>
-          <tr *ngFor="let hour of hours">
-            <td class="agenda-label">{{hour}}</td>
-            <td class="agenda-cell"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <ion-card>
-  <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
+<ion-content class="ion-padding">
 
-  <ion-card-content>
-    Here's a small text description for the card content. Nothing more, nothing less.
-  </ion-card-content>
-</ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nova refeição</ion-card-title>
+      <ion-card-subtitle>Foto + descrição rápida</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-item lines="none">
+        <ion-label position="stacked">Descrição</ion-label>
+        <ion-input
+          [(ngModel)]="newDescription"
+          placeholder="Ex: Almoço, salada com frango...">
+        </ion-input>
+      </ion-item>
+
+      <div class="photo-preview" *ngIf="newPhoto">
+        <img [src]="newPhoto" />
+      </div>
+
+      <ion-button expand="block" (click)="takePhoto()">
+        Tirar foto da refeição
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="success"
+        (click)="saveMeal()"
+        [disabled]="!newPhoto || loading">
+        {{ loading ? 'Salvando...' : 'Salvar refeição' }}
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="meals.length > 0">
+    <ion-list-header>
+      <ion-label>Histórico</ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let meal of meals">
+      <ion-thumbnail slot="start">
+        <img [src]="meal.photo" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ meal.description }}</h2>
+        <p>{{ meal.date | date:'short' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="meals.length === 0" class="empty-state">
+    <p>Nenhuma refeição registrada ainda. Comece tirando uma foto! 📸</p>
+  </div>
+
 </ion-content>
