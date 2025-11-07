@@ -1,15 +1,25 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Diário de Refeições</ion-title>
+    <ion-title class="app-title">
+     <img src="assets/logosimbolo.svg" alt="logo-simbolo" width="40px" height="40px">
+    </ion-title>
+    <!--<ion-buttons slot="end">
+      <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+    </ion-buttons>-->
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
+  <div class="titulo-Refeicao">
+  <h2>Registre a sua refeição</h2>
+  <p>XXXXXXXXXXXXXXXXXXX</p>
+  </div>
+
   <ion-card>
     <ion-card-header>
       <ion-card-title>Nova refeição</ion-card-title>
-      <ion-card-subtitle>Foto + descrição rápida</ion-card-subtitle>
+      <ion-card-subtitle>Foto + Descrição</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
@@ -26,9 +36,11 @@
         <img [src]="newPhoto" />
       </div>
 
+      <div class="botao-foto">
       <ion-button expand="block" (click)="takePhoto()">
-        Tirar foto da refeição
+        Tirar foto
       </ion-button>
+      </div>
 
       <ion-button
         expand="block"

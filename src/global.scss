@@ -1,17 +1,18 @@
-// Cor primária global para header laranja
+//Cor primária global para header laranja
 :root {
-  --ion-color-primary: #fc6803;
+  --ion-color-primary: #d3d0d0;
   --ion-color-primary-rgb: 252,104,3;
   --ion-color-primary-contrast: #fff;
   --ion-color-primary-contrast-rgb: 255,255,255;
-  --ion-color-primary-shade: #fc6803;
-  --ion-color-primary-tint: #fc6803;
+  --ion-color-primary-shade: #d3b39d;
+  --ion-color-primary-tint: #c59678;
 }
+
 // Header global para todas as tabs
 ion-header, ion-toolbar {
-  --background: #fc6803 !important;
-  background: #fc6803 !important;
-  --ion-color-base: #fc6803 !important;
+  --background: #d3d0d0!important;
+  background: #d3d0d0 !important;
+  --ion-color-base:#d3d0d0 !important;
   color: #fff !important;
 }
 ion-title, ion-toolbar .title {
@@ -59,8 +60,8 @@ ion-title, ion-toolbar .title {
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 body, ion-content {
-  --background: #f6f8fc !important;
-  background: #f6f8fc !important;
+  --background: #e7e7ee !important;
+  background: #e7e7ee !important;
 }
 
 .pacientes-title {
@@ -76,11 +77,11 @@ body, ion-content {
 }
 
 .card {
-  background: #232b36;
+  background: #ffffff;
   border-radius: 18px;
   margin-bottom: 18px;
   padding: 18px;
-  color: #fff;
+  color: #131212;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -93,8 +94,7 @@ body, ion-content {
 }
 
 .detalhes-link {
-  color: #3ee06c;
-  font-weight: bold;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -124,8 +124,8 @@ body, ion-content {
 }
 
 .circular {
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   border: 5px solid #3ee06c;
   display: flex;
@@ -138,12 +138,12 @@ body, ion-content {
 .circular-valor {
   font-size: 1.3em;
   font-weight: bold;
-  color: #3ee06c;
+  color: #000000;
 }
 
 .circular-label {
   font-size: 0.9em;
-  color: #3ee06c;
+  color: #5c5b5b;
 }
 
 .macro {
@@ -170,7 +170,7 @@ body, ion-content {
   color: #90caf9;
 }
 .gordura {
-  color: #80cbc4;
+  color: #d2716b;
 }
 
 .agua-card {
@@ -221,13 +221,14 @@ body, ion-content {
   color: #fff;
 }
 
+// toldbar global tabs
 ion-tab-bar {
-  --background: #fc6803 !important;
+  --background: #d3d0d0 !important;
   --color: #fff !important;
   --color-selected: #fff !important;
 }
 
-ion-toolbar {
-  --background: #fc6803 !important;
+/*ion-toolbar {
+  --background: #7a3281 !important;
   --ion-color-base: #fc6803 !important;
-}
+}*/

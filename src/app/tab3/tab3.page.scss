@@ -1,3 +1,16 @@
+.titulo-Refeicao {
+    text-align:left;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.texto-registro-foto {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 1em;
+}
+
 .photo-preview {
   margin: 16px 0;
   text-align: center;
@@ -11,6 +24,15 @@
 
 .empty-state {
   text-align: center;
-  margin-top: 32px;
+  margin-bottom: 15px;
+  color: #333;
   opacity: 0.7;
+}
+
+#ion-toldbar{
+  margin-left: 10px;
+}
+
+.botao-foto{
+  background-color: rgb(208, 143, 117);
 }
