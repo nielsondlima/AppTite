@@ -83,18 +83,25 @@ export class Tab3Page implements OnInit {
   }
 
   async takePhoto() {
-    try {
-      const image = await Camera.getPhoto({
-        quality: 70,
-        resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera,
-      });
+  try {
+    console.log('CLIQUEI no botão de tirar foto');
 
-      this.newPhoto = image.dataUrl || null;
-    } catch (err) {
-      console.log('Câmera cancelada ou erro:', err);
-    }
+    // 1. Verificar/perguntar permissão antes
+    await Camera.requestPermissions();
+
+    const image = await Camera.getPhoto({
+      quality: 70,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    this.newPhoto = image.dataUrl || null;
+    console.log('Foto OK');
+  } catch (err: any) {
+    console.log('Erro ao usar câmera:', err);
+    alert('Erro ao usar câmera: ' + JSON.stringify(err));
   }
+}
 
   async saveMeal() {
     if (!this.newPhoto) return;
