@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalNotifications } from '@capacitor/local-notifications';
 import { Preferences } from '@capacitor/preferences';
 
 const REMINDER_ON_KEY = 'water_reminder_on';
@@ -30,6 +29,10 @@ export class Tab1Page implements OnInit {
 
   async startReminders() {
     try {
+      // import dinâmico para evitar erro em `ionic serve` quando o plugin não estiver instalado
+      const ln = await import('@capacitor/local-notifications');
+      const LocalNotifications = ln.LocalNotifications;
+
       const perm = await LocalNotifications.requestPermissions();
       // permissões podem ter formato { display: 'granted' }
       if (!perm || (perm as any).display !== 'granted') {
@@ -37,14 +40,14 @@ export class Tab1Page implements OnInit {
         return;
       }
 
-      await this.scheduleNotifications();
+      await this.scheduleNotifications(LocalNotifications);
       this.remindersOn = true;
       await Preferences.set({ key: REMINDER_ON_KEY, value: 'true' });
       await Preferences.set({ key: REMINDER_IDS_KEY, value: JSON.stringify(this.scheduledIds) });
       alert('Lembretes ativados (próximas notificações agendadas)');
     } catch (e: any) {
       console.error('Erro ao iniciar lembretes', e);
-      alert('Erro ao iniciar lembretes: ' + e?.message ?? e);
+      alert('Erro ao iniciar lembretes: ' + (e?.message ?? e));
     }
   }
 
@@ -57,6 +60,9 @@ export class Tab1Page implements OnInit {
       }
 
       if (this.scheduledIds.length > 0) {
+        // import dinâmico para evitar erro em `ionic serve` quando o plugin não estiver instalado
+        const ln = await import('@capacitor/local-notifications');
+        const LocalNotifications = ln.LocalNotifications;
         await LocalNotifications.cancel({ notifications: this.scheduledIds.map(id => ({ id })) });
       }
 
@@ -67,11 +73,11 @@ export class Tab1Page implements OnInit {
       alert('Lembretes desativados');
     } catch (e: any) {
       console.error('Erro ao parar lembretes', e);
-      alert('Erro ao parar lembretes: ' + e?.message ?? e);
+      alert('Erro ao parar lembretes: ' + (e?.message ?? e));
     }
   }
 
-  private async scheduleNotifications() {
+  private async scheduleNotifications(LocalNotifications?: any) {
     // agendar 30 notificações nos próximos 60 minutos, a cada 2 minutos
     const notifications: any[] = [];
     const now = Date.now();
@@ -93,6 +99,10 @@ export class Tab1Page implements OnInit {
     }
 
     // agendar com o plugin
+    if (!LocalNotifications) {
+      const ln = await import('@capacitor/local-notifications');
+      LocalNotifications = ln.LocalNotifications;
+    }
     await LocalNotifications.schedule({ notifications });
   }
 
