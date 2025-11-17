@@ -87,7 +87,12 @@ export class Tab3Page implements OnInit {
     console.log('CLIQUEI no botão de tirar foto');
 
     // 1. Verificar/perguntar permissão antes
-    await Camera.requestPermissions();
+    const perm = await Camera.requestPermissions();
+    // Em plataformas nativas o retorno pode incluir a propriedade 'camera'
+    if (perm && (perm as any).camera && (perm as any).camera !== 'granted') {
+      alert('Permissão de câmera não concedida');
+      return;
+    }
 
     const image = await Camera.getPhoto({
       quality: 70,

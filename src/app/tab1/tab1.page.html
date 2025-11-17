@@ -12,74 +12,47 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="card resumo-card">
     <div class="resumo-header">
-      <span>Resumo</span>
-      <a class="detalhes-link" href="#">Detalhes</a>
-    </div>
-    <div class="resumo-content">
-      <div class="resumo-valores">
-        <div>
-          <div class="valor">378</div>
-          <div class="label">Consumidas</div>
+      <ion-header [translucent]="true">
+        <ion-toolbar>
+          <ion-title class="app-title">
+            Hidratação
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content [fullscreen]="true" class="ion-padding">
+
+        <div class="titulo-agua">
+          <h2>Você está se hidratando?</h2>
+          <p>Continue até alcançar sua meta diária!</p>
         </div>
-        <div class="resumo-circular">
-          <div class="circular">
-            <span class="circular-valor">1.399</span>
-            <span class="circular-label">Restantes</span>
+
+        <div class="card-agua-card">
+          <div class="agua-header">Monitor de água</div>
+          <div class="agua-content">
+            <div class="agua-titulo">Água</div>
+            <div class="agua-objetivo">Objetivo: 2,00 L</div>
+            <div class="agua-valor">0,50 L</div>
+            <div class="agua-icons">
+              <ion-icon name="water-outline"></ion-icon>
+              <ion-icon name="water-outline"></ion-icon>
+              <ion-icon name="water-outline"></ion-icon>
+              <ion-icon name="water-outline"></ion-icon>
+              <ion-icon name="water-outline"></ion-icon>
+            </div>
           </div>
         </div>
-        <div>
-          <div class="valor">194</div>
-          <div class="label">Gastas</div>
-        </div>
-      </div>
-      <div class="macro">
-        <div>
-          <span>Carboidratos</span>
-          <span class="macro-bar carbo"><b>50</b> / 217 g</span>
-        </div>
-        <div>
-          <span>Proteína</span>
-          <span class="macro-bar proteina"><b>16</b> / 87 g</span>
-        </div>
-        <div>
-          <span>Gordura</span>
-          <span class="macro-bar gordura"><b>12</b> / 57 g</span>
-        </div>
-      </div>
-    </div>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Lembrete de Hidratação</ion-card-title>
+            <ion-card-subtitle>Notificações locais a cada 2 minutos (demonstração)</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button expand="block" color="primary" (click)="startReminders()">Ativar lembretes</ion-button>
+            <ion-button expand="block" color="medium" (click)="stopReminders()">Desativar lembretes</ion-button>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-content>
   </div>
-
-  <br>
-  <br>
-
-  <div class="titulo-agua">
-  <h2>Você está se hidratando?</h2>
-  <p>Continue até alcançar sua meta diária!</p>
-  </div>
-
-  <div class="card-agua-card">
-    <div class="agua-header">Monitor de água</div>
-    <div class="agua-content">
-      <div class="agua-titulo">Água</div>
-      <div class="agua-objetivo">Objetivo: 2,00 L</div>
-      <div class="agua-valor">0,50 L</div>
-      <div class="agua-icons">
-        <ion-icon name="water-outline"></ion-icon>
-        <ion-icon name="water-outline"></ion-icon>
-        <ion-icon name="water-outline"></ion-icon>
-        <ion-icon name="water-outline"></ion-icon>
-        <ion-icon name="water-outline"></ion-icon>
-      </div>
-    </div>
-  </div>
-    <ion-card>
-  <ion-card-header>
-    <ion-card-title>Anúncio</ion-card-title>
-    <ion-card-subtitle></ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content>
- 
-  </ion-card-content>
-    </ion-card>
-</ion-content>
