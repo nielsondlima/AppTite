@@ -36,3 +36,25 @@
 .botao-foto{
   background-color: rgb(208, 143, 117);
 }
+
+/* Ensure interactive elements are clickable */
+ion-button, ion-thumbnail, img, ion-card {
+  pointer-events: auto !important;
+}
+
+/* Probe box style (non-blocking) */
+.probe-box {
+    position: fixed;
+    left: 12px;
+    bottom: 84px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+  z-index: 99999;
+    pointer-events: none; /* do not intercept clicks */
+  white-space: pre-wrap;
+  max-width: calc(100% - 40px);
+  font-family: monospace;
+}

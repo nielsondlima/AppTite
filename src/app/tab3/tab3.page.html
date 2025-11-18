@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" (pointerdown)="probe($event)">
 
   <div class="titulo-Refeicao">
   <h2>Registre a sua refeição</h2>
@@ -74,3 +74,6 @@
   </div>
 
 </ion-content>
+
+<!-- Probe box: shows topmost element at last touch (development helper) -->
+<div class="probe-box" aria-hidden="true">{{ lastProbe }}</div>

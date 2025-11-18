@@ -70,6 +70,7 @@ export class Tab3Page implements OnInit {
   newDescription = '';
   newPhoto: string | null = null;
   loading = false;
+  lastProbe = '';
 
   constructor() {}
 
@@ -106,7 +107,47 @@ export class Tab3Page implements OnInit {
     console.log('Erro ao usar câmera:', err);
     alert('Erro ao usar câmera: ' + JSON.stringify(err));
   }
-}
+
+  }
+
+  probe(ev: PointerEvent) {
+    try {
+      const x = Math.round(ev.clientX || 0);
+      const y = Math.round(ev.clientY || 0);
+      const els: Element[] = (document as any).elementsFromPoint ? (document as any).elementsFromPoint(x, y) : [document.elementFromPoint(x, y) as Element].filter(Boolean);
+      if (!els || els.length === 0) {
+        this.lastProbe = `x:${x} y:${y} → (no elements)`;
+        return;
+      }
+
+      const max = Math.min(els.length, 12);
+      const rows: string[] = [];
+      rows.push(`x:${x} y:${y} → top ${els.length} element(s) (showing ${max})`);
+      for (let i = 0; i < max; i++) {
+        const el = els[i];
+        const id = el.id ? `#${el.id}` : '';
+        const cls = el.className ? `.${String(el.className).replace(/\s+/g, '.')}` : '';
+        const tag = el.tagName.toLowerCase();
+        const sr = (el as any).shadowRoot ? ' [shadowRoot]' : '';
+        const style = window.getComputedStyle ? window.getComputedStyle(el as Element) : null;
+        const pos = style ? style.position : '';
+        const z = style ? style.zIndex : '';
+        const pe = style ? style.pointerEvents : '';
+        const disp = style ? style.display : '';
+        const vis = style ? style.visibility : '';
+        const op = style ? style.opacity : '';
+        const txt = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+        rows.push(`${i+1}. ${tag}${id}${cls}${sr} — pos:${pos} z:${z} pe:${pe} display:${disp} vis:${vis} op:${op} txt:"${txt}"`);
+      }
+
+      this.lastProbe = rows.join('\n');
+      setTimeout(()=>{ this.lastProbe = this.lastProbe; }, 2000);
+    } catch (e) {
+      console.error('probe error', e);
+      this.lastProbe = 'probe error';
+    }
+  }
+
 
   async saveMeal() {
     if (!this.newPhoto) return;

@@ -4,6 +4,8 @@ import { Preferences } from '@capacitor/preferences';
 const REMINDER_ON_KEY = 'water_reminder_on';
 const REMINDER_IDS_KEY = 'water_reminder_ids';
 const BASE_NOTIFICATION_ID = 9000;
+const WATER_GOAL_KEY = 'water_goal_liters';
+const WATER_CURRENT_KEY = 'water_current_liters';
 
 @Component({
   selector: 'app-tab1',
@@ -15,6 +17,9 @@ export class Tab1Page implements OnInit {
 
   remindersOn = false;
   scheduledIds: number[] = [];
+  goalLiters = 2.0;
+  currentLiters = 0.5;
+  lastProbe = '';
 
   constructor() {}
 
@@ -25,13 +30,44 @@ export class Tab1Page implements OnInit {
       const ids = await Preferences.get({ key: REMINDER_IDS_KEY });
       this.scheduledIds = ids.value ? JSON.parse(ids.value) : [];
     }
+    // carregar meta diária e consumo atual
+    const g = await Preferences.get({ key: WATER_GOAL_KEY });
+    if (g.value) {
+      const v = parseFloat(g.value);
+      if (!isNaN(v)) this.goalLiters = v;
+    }
+    const c = await Preferences.get({ key: WATER_CURRENT_KEY });
+    if (c.value) {
+      const v = parseFloat(c.value);
+      if (!isNaN(v)) this.currentLiters = v;
+    }
+  }
+
+  async saveGoal(ev: any) {
+    try {
+      const inputVal = ev?.target?.value ?? ev?.detail ?? ev?.value ?? ev;
+      const val = parseFloat(inputVal);
+      if (!isNaN(val) && val > 0) {
+        this.goalLiters = val;
+        await Preferences.set({ key: WATER_GOAL_KEY, value: String(this.goalLiters) });
+      } else {
+        // reset input to current value if invalid
+      }
+    } catch (e) {
+      console.warn('Erro ao salvar meta', e);
+    }
   }
 
   async startReminders() {
     try {
-      // import dinâmico para evitar erro em `ionic serve` quando o plugin não estiver instalado
-      const ln = await import('@capacitor/local-notifications');
-      const LocalNotifications = ln.LocalNotifications;
+      // obter plugin em tempo de execução para não quebrar o build web
+      const win: any = window as any;
+      const LocalNotifications = win.Capacitor?.Plugins?.LocalNotifications || win.LocalNotifications || null;
+
+      if (!LocalNotifications) {
+        alert('Plugin de notificações não disponível neste ambiente. Teste em um dispositivo real.');
+        return;
+      }
 
       const perm = await LocalNotifications.requestPermissions();
       // permissões podem ter formato { display: 'granted' }
@@ -60,10 +96,11 @@ export class Tab1Page implements OnInit {
       }
 
       if (this.scheduledIds.length > 0) {
-        // import dinâmico para evitar erro em `ionic serve` quando o plugin não estiver instalado
-        const ln = await import('@capacitor/local-notifications');
-        const LocalNotifications = ln.LocalNotifications;
-        await LocalNotifications.cancel({ notifications: this.scheduledIds.map(id => ({ id })) });
+        const win: any = window as any;
+        const LocalNotifications = win.Capacitor?.Plugins?.LocalNotifications || win.LocalNotifications || null;
+        if (LocalNotifications) {
+          await LocalNotifications.cancel({ notifications: this.scheduledIds.map(id => ({ id })) });
+        }
       }
 
       this.remindersOn = false;
@@ -74,6 +111,64 @@ export class Tab1Page implements OnInit {
     } catch (e: any) {
       console.error('Erro ao parar lembretes', e);
       alert('Erro ao parar lembretes: ' + (e?.message ?? e));
+    }
+  }
+
+  async onToggleChange(event: any) {
+    const checked = event?.detail?.checked;
+    const win: any = window as any;
+    const LocalNotifications = win.Capacitor?.Plugins?.LocalNotifications || win.LocalNotifications || null;
+    if (!LocalNotifications) {
+      // plugin não disponível — manter toggle no estado anterior
+      this.remindersOn = false;
+      alert('Notificações nativas não disponíveis neste ambiente. Teste em um dispositivo real.');
+      return;
+    }
+
+    if (checked) {
+      await this.startReminders();
+    } else {
+      await this.stopReminders();
+    }
+  }
+
+  probe(ev: PointerEvent) {
+    try {
+      const x = Math.round(ev.clientX || 0);
+      const y = Math.round(ev.clientY || 0);
+      const els: Element[] = (document as any).elementsFromPoint ? (document as any).elementsFromPoint(x, y) : [document.elementFromPoint(x, y) as Element].filter(Boolean);
+
+      if (!els || els.length === 0) {
+        this.lastProbe = `x:${x} y:${y} → (no elements)`;
+        return;
+      }
+
+      const max = Math.min(els.length, 12);
+      const rows: string[] = [];
+      rows.push(`x:${x} y:${y} → top ${els.length} element(s) (showing ${max})`);
+      for (let i = 0; i < max; i++) {
+        const el = els[i];
+        const id = el.id ? `#${el.id}` : '';
+        const cls = el.className ? `.${String(el.className).replace(/\s+/g, '.')}` : '';
+        const tag = el.tagName.toLowerCase();
+        const sr = (el as any).shadowRoot ? ' [shadowRoot]' : '';
+        const style = window.getComputedStyle ? window.getComputedStyle(el as Element) : null;
+        const pos = style ? style.position : '';
+        const z = style ? style.zIndex : '';
+        const pe = style ? style.pointerEvents : '';
+        const disp = style ? style.display : '';
+        const vis = style ? style.visibility : '';
+        const op = style ? style.opacity : '';
+        const txt = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+        rows.push(`${i+1}. ${tag}${id}${cls}${sr} — pos:${pos} z:${z} pe:${pe} display:${disp} vis:${vis} op:${op} txt:"${txt}"`);
+      }
+
+      this.lastProbe = rows.join('\n');
+      // keep visible briefly
+      setTimeout(()=>{ this.lastProbe = this.lastProbe; }, 2000);
+    } catch (e) {
+      console.error('probe error', e);
+      this.lastProbe = 'probe error';
     }
   }
 
@@ -98,10 +193,14 @@ export class Tab1Page implements OnInit {
       this.scheduledIds.push(id);
     }
 
-    // agendar com o plugin
+    // agendar com o plugin (assume-se que já foi passado)
     if (!LocalNotifications) {
-      const ln = await import('@capacitor/local-notifications');
-      LocalNotifications = ln.LocalNotifications;
+      const win: any = window as any;
+      LocalNotifications = win.Capacitor?.Plugins?.LocalNotifications || win.LocalNotifications || null;
+    }
+    if (!LocalNotifications) {
+      console.warn('LocalNotifications plugin não disponível. Não foi possível agendar notificações.');
+      return;
     }
     await LocalNotifications.schedule({ notifications });
   }

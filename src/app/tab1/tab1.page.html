@@ -1,58 +1,63 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title class="app-title">
-      Início
+      <img src="assets/logosimbolo.svg" alt="logo-simbolo" width="40px" height="40px">
     </ion-title>
     <ion-buttons slot="end">
-      <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+      <ion-button fill="clear" aria-label="Configurações">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="card resumo-card">
-    <div class="resumo-header">
-      <ion-header [translucent]="true">
-        <ion-toolbar>
-          <ion-title class="app-title">
-            Hidratação
-          </ion-title>
-        </ion-toolbar>
-      </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding" (pointerdown)="probe($event)">
 
-      <ion-content [fullscreen]="true" class="ion-padding">
-
-        <div class="titulo-agua">
-          <h2>Você está se hidratando?</h2>
-          <p>Continue até alcançar sua meta diária!</p>
-        </div>
-
-        <div class="card-agua-card">
-          <div class="agua-header">Monitor de água</div>
-          <div class="agua-content">
-            <div class="agua-titulo">Água</div>
-            <div class="agua-objetivo">Objetivo: 2,00 L</div>
-            <div class="agua-valor">0,50 L</div>
-            <div class="agua-icons">
-              <ion-icon name="water-outline"></ion-icon>
-              <ion-icon name="water-outline"></ion-icon>
-              <ion-icon name="water-outline"></ion-icon>
-              <ion-icon name="water-outline"></ion-icon>
-              <ion-icon name="water-outline"></ion-icon>
-            </div>
-          </div>
-        </div>
-
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Lembrete de Hidratação</ion-card-title>
-            <ion-card-subtitle>Notificações locais a cada 2 minutos (demonstração)</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-button expand="block" color="primary" (click)="startReminders()">Ativar lembretes</ion-button>
-            <ion-button expand="block" color="medium" (click)="stopReminders()">Desativar lembretes</ion-button>
-          </ion-card-content>
-        </ion-card>
-
-      </ion-content>
+  <div class="titulo-agua">
+    <h2>Você está se hidratando?</h2>
+    <p>Continue até alcançar sua meta diária!</p>
   </div>
+
+  <div class="card-agua-card">
+    <div class="agua-header">Monitor de água</div>
+    <div class="agua-content">
+      <div class="agua-titulo">Água</div>
+      <div class="agua-objetivo">
+        <ion-item lines="none">
+          <ion-label>Objetivo (L)</ion-label>
+          <ion-input type="number" step="0.25" [value]="goalLiters" (ionBlur)="saveGoal($event)" inputmode="decimal"></ion-input>
+        </ion-item>
+      </div>
+      <div class="agua-valor">{{ currentLiters | number:'1.2-2' }} L</div>
+      <div class="agua-icons">
+        <ion-icon name="water-outline"></ion-icon>
+        <ion-icon name="water-outline"></ion-icon>
+        <ion-icon name="water-outline"></ion-icon>
+        <ion-icon name="water-outline"></ion-icon>
+        <ion-icon name="water-outline"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lembrete de Hidratação</ion-card-title>
+      <ion-card-subtitle>Notificações locais a cada 2 minutos</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>Ativar lembretes</ion-label>
+        <ion-toggle slot="end" [checked]="remindersOn" (ionChange)="onToggleChange($event)"></ion-toggle>
+      </ion-item>
+      <div style="margin-top:12px">
+        <p *ngIf="remindersOn">Lembretes ativados — próximas notificações agendadas.</p>
+        <p *ngIf="!remindersOn">Lembretes desativados.</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<!-- Probe box: shows topmost element at last touch (development helper) -->
+<div class="probe-box" aria-hidden="true">{{ lastProbe }}</div>
+

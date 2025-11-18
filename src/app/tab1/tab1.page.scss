@@ -21,3 +21,56 @@
     border-top-right-radius: 18px;
     font-size: 1.1em;
 }
+
+ion-card {
+    --border-radius: 12px;
+}
+
+.agua-content {
+    padding: 16px;
+    color: #fff;
+}
+
+.agua-titulo {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.agua-objetivo, .agua-valor {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.agua-icons ion-icon {
+    color: #9fd6ff;
+    font-size: 22px;
+    margin: 0 6px;
+}
+
+/* Force interactive elements to accept pointer events in case of overlays */
+ion-card, .card-agua-card, ion-toggle, ion-input, ion-button {
+    pointer-events: auto !important;
+    z-index: 2;
+}
+
+/* Ensure content area receives clicks */
+ion-content {
+    pointer-events: auto !important;
+}
+
+/* Probe box style (non-blocking) */
+.probe-box {
+    position: fixed;
+    left: 12px;
+    bottom: 84px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    z-index: 99999;
+    pointer-events: none; /* do not intercept clicks */
+    white-space: pre-wrap;
+    max-width: calc(100% - 40px);
+    font-family: monospace;
+}

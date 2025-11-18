@@ -64,6 +64,42 @@ body, ion-content {
   background: #e7e7ee !important;
 }
 
+/* Dev-only helper: disable/hide Ionic overlays to test pointer blocking issues.
+   To enable, add the class `debug-disable-overlays` to the <body> element. */
+.debug-disable-overlays {
+  /* backdrops and overlays */
+  ion-backdrop,
+  .ion-overlay,
+  ion-loading,
+  ion-modal,
+  ion-popover,
+  ion-alert,
+  ion-picker,
+  ion-toast,
+  .popover-wrapper,
+  .modal-wrapper,
+  .loading-wrapper,
+  .overlay-backdrop {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* broad defensive selectors (use only for debugging) */
+  .ion-overlay, .ion-overlay-backdrop, .ion-modal, .ion-popover {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* make sure probe box still shows */
+  .probe-box {
+    pointer-events: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
 .pacientes-title {
   font-weight: bold;
   letter-spacing: 2px;
